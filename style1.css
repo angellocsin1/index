@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url(https://img.freepik.com/free-vector/realistic-background-futuristic-style_23-2149129125.jpg?t=st=1729909194~exp=1729912794~hmac=97f6ee54e8419caf53b87ac48086f93353b00ef02ea8797b11bc9e31d55616cc&w=740),no-repeat;
+    background-size: cover;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    margin: 0;
+    width: 550px;
+    text-align: center;
+    height: 90%;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 80%;
+    padding: 10px;
+    background-color: #310c97;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #af1111;
+}
+
+#message {
+    margin-top: 20px;
+    color: red;
+}
