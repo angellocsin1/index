@@ -7,6 +7,7 @@ body {
 }
 .container {
   margin-top: 100px;
+
 }
 .message {
   font-size: 1.5rem;
@@ -32,4 +33,13 @@ body {
 }
 .button:hover {
   background-color: #0056b3;
+}
+
+#cartContent {
+  width: fit-content;
+  height: auto;
+  padding: 10px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }

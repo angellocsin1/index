@@ -208,7 +208,11 @@ body.showCart .container{
    position: absolute;
    top: 5%;
    right: 6%;
+   background: none;
+   outline: none;
+   border: none;
    color: #fff;
+   cursor: pointer;
    size: 23px;
 
 }

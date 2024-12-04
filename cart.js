@@ -1,8 +1,5 @@
 let cart = [];
 
-
-
-
 const iconCart = document.getElementById('iconCart');
 const closeCart = document.querySelector('.close');
 const checkOutButton = document.querySelector('.checkOut');
@@ -10,22 +7,15 @@ const listCart = document.querySelector('.listCart');
 const body = document.body;
 const cartTab = document.querySelector('.cartTab');
 
-
-
-
 iconCart.addEventListener('click', () => {
     body.classList.toggle('showCart');
     cartTab.classList.toggle('hidden');
 });
 
-
-
-
 checkOutButton.addEventListener('click', () => {
     console.log('Check Out clicked!');
     checkOut();
 });
-
 
 closeCart.addEventListener('click', () => {
     console.log('Close button clicked!');
@@ -37,22 +27,18 @@ closeCart.addEventListener('click', () => {
     }
 });
 
-
 function loadCart() {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
         cart = JSON.parse(savedCart);
+        console.log(savedCart);
         updateCartUI();
     }
 }
 
-
 function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', cart);
 }
-
-
-
 
 function addToCart(productName, productPrice) {
     const existingItem = cart.find(item => item.name === productName);
@@ -61,11 +47,10 @@ function addToCart(productName, productPrice) {
     } else {
         cart.push({ name: productName, price: productPrice, quantity: 1 });
     }
-    saveCart();
+    consolCart();
     updateCartUI();
     updateCartIcon();
 }
-
 
 function updateCartIcon() {
     const cartIcon = document.querySelector('.icon-cart');
@@ -83,6 +68,10 @@ function updateCartIcon() {
     }
 }
 
+function consolCart() {
+    let JsonCart = JSON.stringify(cart);
+    localStorage.setItem('cart', JsonCart);
+}
 
 function removeFromCart(index) {
     cart.splice(index, 1);
@@ -90,15 +79,15 @@ function removeFromCart(index) {
     updateCartUI();
 }
 
-
 function checkOut() {
     if (cart.length === 0) {
         alert('Your cart is empty!');
         return;
     }
     alert('Thank you for your purchase!');
+    consolCart();
+    window.location.href = 'not.html';
     cart = [];
-    saveCart();
     updateCartUI();
 }
 
@@ -196,10 +185,61 @@ window.addEventListener('DOMContentLoaded', () => {
         // Update total amount
         document.getElementById('total-amount').textContent = `Total: php ${total}`;
     }
-
-
     // Function to remove a product from the cart
     function removeFromCart(index) {
         cart.splice(index, 1);
         updateCart();
+    }
+console.log(cart);
+    function displayCartInNotification() {
+        const cartContent = document.getElementById('cartContent');
+
+    
+        if (!cartContent) return;
+        
+        cartContent.innerHTML = '';
+        
+        if (cartItems.length === 0) {
+            cartContent.innerHTML = '<p>No items in cart</p>';
+            return;
+        }
+    
+        let total = 0;
+        const cartTable = document.createElement('table');
+        cartTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        `;
+    
+        cartItems.forEach(item => {
+            const row = document.createElement('tr');
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>php ${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>php ${itemTotal}</td>
+            `;
+            
+            cartTable.querySelector('tbody').appendChild(row);
+        });
+    
+        const totalRow = document.createElement('tr');
+        totalRow.innerHTML = `
+            <td colspan="3"><strong>Total Amount:</strong></td>
+            <td><strong>php ${total}</strong></td>
+        `;
+        cartTable.querySelector('tbody').appendChild(totalRow);
+        
+        cartContent.appendChild(cartTable);
     }
