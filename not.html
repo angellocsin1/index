@@ -32,7 +32,7 @@
 });
 
   let email = localStorage.getItem('loggedInEmail');
-  emailjs.init("WBqrjeuHUwQE0yKrZ");
+  emailjs.init("AR76IDh0MurbZVupp");
   function placeOrder() {
       const templateParams = {
           to_email: email,
@@ -41,7 +41,7 @@
           message: 'Your Order Successfully Placed. Thank you for shopping with us!',
       }
 
-      emailjs.send("service_x0az5pf", "template_ynwlt2a", templateParams)
+      emailjs.send("service_uzu8e9k", "template_jbeka2v", templateParams)
         .then(
           (response) => {
             alert('Email sent successfully!', response.status, response.text);
