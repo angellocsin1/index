@@ -3,6 +3,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     
     const email = document.getElementById("email").value;
     const password = document.getElementById("regPassword").value;
+    const address = document.getElementById("address");
 
     // Check if user already exists
     let users = JSON.parse(localStorage.getItem("users")) || [];
@@ -12,7 +13,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     }
 
     // Save new user data
-    users.push({ email, password });
+    users.push({ email, address, password });
     localStorage.setItem("users", JSON.stringify(users));
     document.getElementById("registerMessage").textContent = "Registration successful!";
 });
@@ -28,6 +29,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     let user = users.find(user => user.email === email && user.password === password);
     if (user) {
         localStorage.setItem("loggedInEmail", email)
+        localStorage.setItem("loggedAddress", users.address);
         window.location.href = "pro.html";  // Redirect to cart page (or your main page)
     } else {
         document.getElementById("loginMessage").textContent = "Invalid username or password!";
