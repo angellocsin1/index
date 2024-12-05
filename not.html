@@ -10,7 +10,10 @@
   <div class="container">
     <h1>Order Placed Successfully!</h1>
     <p class="message">Your order confirmation will be sent to your Gmail at:</p>
-    <p id="user-email">example@gmail.com</p>
+    <p id="user-email"></p>
+      <div id="cartContent">
+        
+      </div>
     <button class="button" onclick="placeOrder()">Place Order</button>
     
     <!-- Notification Message -->
@@ -19,5 +22,90 @@
     </div>
   </div>
   <script src="cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const userEmail = localStorage.getItem('loggedInEmail');
+    document.getElementById('user-email').textContent = userEmail;
+    
+    displayCartInNotification()
+});
+
+  let email = localStorage.getItem('loggedInEmail');
+  emailjs.init("WBqrjeuHUwQE0yKrZ");
+  function placeOrder() {
+      const templateParams = {
+          to_email: email,
+          to_name: email,
+          from_name: 'MobileGo',
+          message: 'Your Order Successfully Placed. Thank you for shopping with us!',
+      }
+
+      emailjs.send("service_x0az5pf", "template_ynwlt2a", templateParams)
+        .then(
+          (response) => {
+            alert('Email sent successfully!', response.status, response.text);
+          },
+          (error) => {
+            alert('Failed to send email:', error);
+            console.error(error);
+          }
+        );
+  }
+
+  function displayCartInNotification() {
+        const cartContent = document.getElementById('cartContent');
+        const cartItems = JSON.parse(localStorage.getItem("cart"));
+        if (!cartContent) return;
+        
+        cartContent.innerHTML = '';
+        
+        if (cartItems.length === 0) {
+            cartContent.innerHTML = '<p>No items in cart</p>';
+            return;
+        }
+    
+        let total = 0;
+        const cartTable = document.createElement('table');
+        cartTable.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        `;
+    
+        cartItems.forEach(item => {
+            const row = document.createElement('tr');
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>php ${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>php ${itemTotal}</td>
+            `;
+            
+            cartTable.querySelector('tbody').appendChild(row);
+        });
+    
+        const totalRow = document.createElement('tr');
+        totalRow.innerHTML = `
+            <td colspan="3"><strong>Total Amount:</strong></td>
+            <td><strong>php ${total}</strong></td>
+        `;
+        cartTable.querySelector('tbody').appendChild(totalRow);
+        
+        cartContent.appendChild(cartTable);
+        localStorage.setItem('cart', []);
+    }
+
+</script>
 </body>
 </html>
